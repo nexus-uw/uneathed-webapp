@@ -26,15 +26,18 @@ async function load(type) {
 }
 
 async function triggerOrder(id) {
-  return await fetch(`${SERVER}/orders/${id}/order_arrived.json`, {
+  let res = await fetch(`${SERVER}/orders/${id}/order_arrived.json`, {
     method: 'PUT'
-  }).json();
+  })
+  return await res.json();
 }
 
 async function doWork(issueId) {
-  return await fetch(`${SERVER}/issues/${issueId}/do-work.json`, {
+  let res = await fetch(`${SERVER}/issues/${issueId}/start.json`, {
     method: 'PUT'
-  }).json();
+  });
+  return await res.json();
+
 }
 
 export default new Vuex.Store({

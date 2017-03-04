@@ -3,13 +3,16 @@
     <h1>Inventory</h1>
     <button v-on:click="loadInventory()">reload inventory</button>
     <button v-on:click="triggerOrder()">trigger order comming in</button>
-    <h2> inventory </h2>
-    <div class="row">
-
+    <div class="row title-bar">
+      <h2 class="col">item</h2>
+      <h2 class="col">available</h2>
+      <h2 class="col">on order</h2>
     </div>
     <ul>
-      <li v-for="i in inventory">
-        {{i.name}} number on hand {{i.available_count}} number on order {{i.orderCount}}
+      <li v-for="i in inventory" class="row">
+        <div class="col">{{i.name}}</div>
+        <div class="col">{{i.available_count}}</div>
+        <div class="col">{{i.orderCount}}</div>
       </li>
     </ul>
   </div>
@@ -49,21 +52,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1,
-  h2 {
-    font-weight: normal;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 0 10px;
-  }
-  
-  a {
-    color: #42b983;
-  }
+  .ul {}
 </style>

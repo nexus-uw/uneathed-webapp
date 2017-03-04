@@ -3,19 +3,27 @@
     <h1>Issues</h1>
     <button v-on:click="loadIssues()">reload issues</button>
     <button v-on:click="doWork()">DO WORK</button>
-    <div>{{message}}</div>
-    <h2> priority 1</h2>
-    <ul>
-      <li v-for="issue in priorityOne">{{issue}}</li>
-    </ul>
-    <h2> priority 2</h2>
-    <ul>
-      <li v-for="issue in priorityTwo">{{issue}}</li>
-    </ul>
-    <h2> priority 3</h2>
-    <ul>
-      <li v-for="issue in priorityThree">{{issue}}</li>
-    </ul>
+    <div style="color:red">{{message}}</div>
+    <div class="row ">
+      <div class="col">
+        <h2 class="title-bar"> priority 1</h2>
+        <div v-for="issue in priorityOne">
+          {{issue.comment}}
+        </div>
+      </div>
+      <div class="col">
+        <h2 class="title-bar"> priority 2</h2>
+        <div v-for="issue in priorityTwo">
+          {{issue.comment}}
+        </div>
+      </div>
+      <div class="col">
+        <h2 class="title-bar"> priority 3</h2>
+        <div v-for="issue in priorityThree">
+          {{issue.comment}}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,22 +90,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1,
-  h2 {
-    font-weight: normal;
+  .row {
+    display: flex;
   }
   
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  
-  a {
-    color: #42b983;
+  .col {
+    width: 33%
   }
 </style>
