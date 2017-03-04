@@ -4,6 +4,9 @@
     <button v-on:click="loadInventory()">reload inventory</button>
     <button v-on:click="triggerOrder()">trigger order comming in</button>
     <h2> inventory </h2>
+    <div class="row">
+
+    </div>
     <ul>
       <li v-for="i in inventory">
         {{i.name}} number on hand {{i.available_count}} number on order {{i.orderCount}}

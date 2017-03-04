@@ -26,14 +26,14 @@ async function load(type) {
 }
 
 async function triggerOrder(id) {
-  return await fetch(`${SERVER}/trigger-order/${id}`, {
-    method: 'POST'
+  return await fetch(`${SERVER}/orders/${id}/order_arrived.json`, {
+    method: 'PUT'
   }).json();
 }
 
 async function doWork(issueId) {
-  return await fetch(`${SERVER}/do-work/${issueId}`, {
-    method: 'POST'
+  return await fetch(`${SERVER}/issues/${issueId}/do-work.json`, {
+    method: 'PUT'
   }).json();
 }
 
@@ -62,7 +62,7 @@ export default new Vuex.Store({
       await triggerOrder(orderId);
       ['Orders', 'Items'].forEach(type => commit('load' + type, load(type)))
     },
-    async triggerWork({ commit }, jobId) {
+    async doWork({ commit }, jobId) {
       await triggerOrder(jobId);
       ['Orders', 'Items', 'Issues'].forEach(type => commit('load' + type, load(type)))
     }
