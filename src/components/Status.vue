@@ -4,6 +4,16 @@
     <div style="display:inline-flex">
       <bar-chart v-if="haveItems" v-bind:chartData="data" v-bind:options="options" v-bind:height="400" v-bind:width="800"></bar-chart>
     </div>
+    <div class="row title-bar">
+      <h2 class="col-5">item</h2>
+      <h2 class="col-5">number of days between service (historical)</h2>
+    </div>
+    <ul>
+      <li v-for="i in serviceLives" class="row">
+        <div class="col-5">{{i[0]}}</div>
+        <div class="col-5">{{i[1]}}</div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -17,7 +27,30 @@
     name: 'work',
     data() {
       return {
-        message: ''
+        message: '',
+        serviceLives: [
+          ["SS", 22],
+          ["BED", 16],
+          ["WHL", 60],
+          ["STR", 43],
+          ["BP", 61],
+          ["BRK", 19],
+          ["DIF", 20],
+          ["FD", 17],
+          ["STE", 1],
+          ["PPF", 24],
+          ["TRA", 22],
+          ["CHOIST", 56],
+          ["CAB", 21],
+          ["INJ", 89],
+          ["CSTEER", 40],
+          ["SSPN", 475],
+          ["COOL", 51],
+          ["RAD", 115],
+          ["ALT", 42],
+          ["TC", 50],
+          ["PPH", 3],
+        ]
       }
     },
     mounted() {
@@ -67,11 +100,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .row {
-    display: flex;
-  }
-  
-  .col {
-    width: 33%
+  .col-5 {
+    width: 50%
   }
 </style>
