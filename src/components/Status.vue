@@ -75,7 +75,7 @@
               label: 'In Stock + Ordered (%)',
               backgroundColor: '#28744a',
               data: store.state.items.map((i, index) =>
-                Math.round(i.available_count + R.sum(store.state.orders.filter(o => o.item_type_id === i.id).map(o => o.item_count)) / expectedDemand[index] * 100)
+                Math.round((i.available_count + R.sum(store.state.orders.filter(o => o.item_type_id === i.id).map(o => o.item_count))) / expectedDemand[index] * 100)
               ) || []
             }],
           chartData: [
