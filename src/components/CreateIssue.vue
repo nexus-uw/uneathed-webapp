@@ -3,10 +3,13 @@
     <h1>Issue</h1>
     <div>
       <input v-model="issue.comment" type="text">
-      <select v-model="issue.component_id">
-        <option v-for="component_type in component_types" v-bind:value="component_type.id">{{component_type.name}}</option>
+      <select v-model="issue.equipment">
+        <option v-for="equipmentPiece in equipment" v-bind:value="equipmentPiece">{{equipmentPiece.name}}</option>
       </select>
-      <select v-model="issue.id">
+      <select v-model="issue.component" v-if="issue.equipment != null">
+        <option v-for="component in components" v-bind:value="component">{{component.name}}</option>
+      </select>
+      <select v-model="issue.issue_type_id" v-if="issue.component != null">
         <option v-for="issue_type in issue_types" v-bind:value="issue_type.id">{{issue_type.name}}</option>
       </select>
       <select v-model="issue.priority">
@@ -18,6 +21,9 @@
         <option v-bind:value="5">5</option>
       </select>
       <button v-on:click="submitIssue()">Submit</button>
+      <div v-if="issueHasError">
+        Please Fill In Missing Fields
+      </div>
     </div>
   </div>
 </template>
@@ -28,28 +34,70 @@
     name: 'create_issue',
     data() {
       return {
-          issue: {
-            id: 0,
-            component_id: 0,
-            comment: ""
-          }
+        issueHasError: false,
+        issue: {
+          issue_type_id: null,
+          component: null,
+          equipment: null,
+          priority: 3,
+          comment: ""
+        }
       }
     },
     mounted() {
-      store.dispatch('load', 'ComponentTypes');
+      store.dispatch('load', 'Components');
       store.dispatch('load', 'IssueTypes');
     },
     methods: {
       submitIssue() {
-        store.dispatch('submitIssue', this.issue);
+        if(this.issue.issue_type_id != null && this.issue.component != null){
+          this.issue.component_id = this.issue.component.id;
+          store.dispatch('submitIssue', this.issue);
+        }
+        else{
+          this.issueHasError = true;
+        }
       }
     },
     computed: {
       issue_types() {
-        return store.state.issue_types;
+        if(this.issue.component == null){
+            return [];
+        }
+        var validIssueTypesForComponentType = [];
+
+        for(var issueTypeIndex = 0; issueTypeIndex < store.state.issue_types.length; issueTypeIndex++){
+          var issueType = store.state.issue_types[issueTypeIndex];
+
+          if(issueType.component_type_id == this.issue.component.component_type_id){
+            validIssueTypesForComponentType.push(issueType);
+          }
+        }
+        this.issue.issue_type_id = validIssueTypesForComponentType[0].id;
+        return validIssueTypesForComponentType;
       },
-      component_types() {
-        return store.state.component_types;
+      equipment() {
+          if(store.state.components.length > 0){
+            return [store.state.components[0].equipment];
+          }
+          else{
+            return [];
+          }
+      },
+      components() {
+        if(this.issue.equipment == null){
+          return [];
+        }
+        var validComponentsForEquipment = [];
+
+        for(var equipmentIndex = 0; equipmentIndex < store.state.components.length; equipmentIndex++){
+          var component = store.state.components[equipmentIndex];
+
+          if(component.equipment.id == this.issue.equipment.id){
+            validComponentsForEquipment.push(component);
+          }
+        }
+        return validComponentsForEquipment;
       }
     }
   }

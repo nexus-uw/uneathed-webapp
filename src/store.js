@@ -41,11 +41,14 @@ async function doWork(issueId) {
   return await res.json();
 
 }
-
 async function submitIssue(issue) {
   console.log(issue);
   let res = await fetch(`${SERVER}/issues.json`, {
     method: 'POST',
+    headers:  new Headers({
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }),
     body: JSON.stringify(issue)
   });
   return await res.json();
@@ -56,7 +59,7 @@ export default new Vuex.Store({
     issues: [],
     orders: [],
     items: [],
-    component_types: [],
+    components: [],
     issue_types: []
   },
   mutations: {
@@ -69,8 +72,8 @@ export default new Vuex.Store({
     loadItems(state, data) {
       state.items = [].concat(data);
     },
-    loadComponentTypes(state, data) {
-      state.component_types = [].concat(data);
+    loadComponents(state, data) {
+      state.components = [].concat(data);
     },
     loadIssueTypes(state, data){
       state.issue_types = [].concat(data);
