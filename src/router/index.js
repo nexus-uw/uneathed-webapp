@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Work from '@/components/Work'
-import Inventory from '@/components/inventory'
+import Inventory from '@/components/Inventory'
 import CreateIssue from '@/components/CreateIssue'
-import Status from '@/components/status'
+import Status from '@/components/Status'
 Vue.use(Router)
 
 export default new Router({
