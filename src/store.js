@@ -18,7 +18,7 @@ const _getIssues = () => new Promise((resolve, reject) => setTimeout(() => {
     ))
 }, 1000))
 
-const SERVER = 'http://10.0.2.89:3000'
+export const SERVER = 'http://10.0.2.89:3000'
 
 async function load(type) {
   let response = await fetch(`${SERVER}/${type.replace(/([A-Z])/g, function($1, offset){     

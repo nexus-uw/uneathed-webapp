@@ -3,10 +3,15 @@
     <h1>Issue</h1>
     <div>
       <div class="form-row">
+        <label>Detect Issue</label>
+        <input type="file" @change="uploadIssueImage">
+        <div>{{image_recognition_message}}</div>
+      </div>
+      <div class="form-row">
         <label>Equipment</label>
         <select v-model="issue.equipment">
-        <option v-for="equipmentPiece in equipment" v-bind:value="equipmentPiece">{{equipmentPiece.name}}</option>
-      </select>
+          <option v-for="equipmentPiece in equipment" v-bind:value="equipmentPiece">{{equipmentPiece.name}}</option>
+        </select>
       </div>
       <div class="form-row">
         <label>Component</label>
@@ -40,11 +45,13 @@
 
 <script>
   import store from '../store';
+  import {SERVER} from '../store';
   export default {
     name: 'create_issue',
     data() {
       return {
         message: null,
+        image_recognition_message: null,
         issue: {
           issue_type_id: null,
           component: null,
@@ -69,6 +76,41 @@
         } else {
           this.message = 'Please Fill In Missing Fields';
         }
+      },
+      uploadIssueImage(e){
+        this.image_recognition_message = null;
+        var files = e.target.files || e.dataTransfer.files;
+        if (!files.length) {
+          return;
+        }
+        var imageData = new FormData();
+        var self = this;
+        imageData.append('image', files[0]);
+        fetch(`${SERVER}/images/detect_component_type.json`, {
+          method: 'POST',
+          body: imageData
+        }).then(function (res) {
+          if(res.status == 200) {
+            res.json().then(function (components) {
+              if (components.length > 0) {
+                var component = components[0];
+
+                self.issue.equipment = component.equipment;
+                self.issue.component = component;
+              }
+              else{
+                self.image_recognition_message = "Could not match image to component.";
+                self.issue.equipment = null;
+                self.issue.component = null;
+              }
+            });
+          }
+          else{
+            self.image_recognition_message = "Could not match image to component.";
+            self.issue.equipment = null;
+            self.issue.component = null;
+          }
+        });
       }
     },
     computed: {
@@ -113,6 +155,7 @@
       }
     }
   }
+
 
 </script>
 
