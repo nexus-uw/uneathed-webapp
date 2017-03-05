@@ -21,7 +21,9 @@ const _getIssues = () => new Promise((resolve, reject) => setTimeout(() => {
 const SERVER = 'http://10.0.2.89:3000'
 
 async function load(type) {
-  let response = await fetch(`${SERVER}/${type.toLowerCase()}.json`);
+  let response = await fetch(`${SERVER}/${type.replace(/([A-Z])/g, function($1, offset){     
+    return "_" + $1.toLowerCase();
+  }).substring(1)}.json`);
   return await response.json();
 }
 
@@ -40,11 +42,22 @@ async function doWork(issueId) {
 
 }
 
+async function submitIssue(issue) {
+  console.log(issue);
+  let res = await fetch(`${SERVER}/issues.json`, {
+    method: 'POST',
+    body: JSON.stringify(issue)
+  });
+  return await res.json();
+}
+
 export default new Vuex.Store({
   state: {
     issues: [],
     orders: [],
-    items: []
+    items: [],
+    component_types: [],
+    issue_types: []
   },
   mutations: {
     loadIssues(state, data) {
@@ -55,6 +68,12 @@ export default new Vuex.Store({
     },
     loadItems(state, data) {
       state.items = [].concat(data);
+    },
+    loadComponentTypes(state, data) {
+      state.component_types = [].concat(data);
+    },
+    loadIssueTypes(state, data){
+      state.issue_types = [].concat(data);
     }
   },
   actions: {
@@ -65,6 +84,9 @@ export default new Vuex.Store({
       await triggerOrder(orderId);
       commit('loadItems', await load('Items'))
       commit('loadOrders', await load('Orders'))
+    },
+    async submitIssue({ commit }, issue) {
+      await submitIssue(issue);
     },
     async doWork({ commit }, jobId) {
       await doWork(jobId);
