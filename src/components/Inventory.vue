@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
     <h1>Inventory</h1>
-    <button v-on:click="loadInventory()">reload inventory</button>
-    <button v-on:click="triggerOrder()">trigger order comming in</button>
+    <button v-on:click="triggerOrder()" v-bind:disabled="!anyOrders">TRIGGER ORDER COMING IN</button>
     <div class="row title-bar">
       <h2 class="col">item</h2>
       <h2 class="col">available</h2>
@@ -26,22 +25,25 @@
       return {
       }
     },
+    mounted() {
+      store.dispatch('load', 'Items');
+      store.dispatch('load', 'Orders');
+    },
     methods: {
-      loadInventory() {
-        store.dispatch('load', 'Items');
-        store.dispatch('load', 'Orders');
-      },
       triggerOrder() {
-        if (!store.state.orders || !store.state.orders.length) {
+        if (!store.state.orders || !store.state.orders.length || !store.state.orders[0].id) {
           return;
         }
         store.dispatch('triggerOrder', store.state.orders[0].id);
       }
     },
     computed: {
+      anyOrders() {
+        return store.state.orders.length > 0;
+      },
       inventory() {
         return store.state.items.map(i => {
-          i.orderCount = store.state.orders.reduce((sum, order) => order.item_type_id === i.id ? sum + 1 : sum, 0);
+          i.orderCount = store.state.orders.reduce((sum, order) => order.item_type_id === i.id ? sum + order.item_count : sum, 0);
           return i
         });
       }

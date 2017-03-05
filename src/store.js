@@ -63,11 +63,12 @@ export default new Vuex.Store({
     },
     async triggerOrder({ commit }, orderId) {
       await triggerOrder(orderId);
-      ['Orders', 'Items'].forEach(type => commit('load' + type, load(type)))
+      commit('loadItems', await load('Items'))
+      commit('loadOrders', await load('Orders'))
     },
     async doWork({ commit }, jobId) {
-      await triggerOrder(jobId);
-      ['Orders', 'Items', 'Issues'].forEach(type => commit('load' + type, load(type)))
+      await doWork(jobId);
+      commit('loadIssues', await load('Issues'))
     }
   }
 });
