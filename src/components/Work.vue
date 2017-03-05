@@ -7,19 +7,19 @@
       <div class="col">
         <h2 class="title-bar"> priority 1</h2>
         <div v-for="issue in priorityOne">
-
+          {{issue.component.equipment.name}}: {{issue.issue_type.name}}
         </div>
       </div>
       <div class="col">
         <h2 class="title-bar"> priority 2</h2>
         <div v-for="issue in priorityTwo">
-          {{issue.issue_type.name}}
+          {{issue.component.equipment.name}}: {{issue.issue_type.name}}
         </div>
       </div>
       <div class="col">
         <h2 class="title-bar"> priority 3</h2>
         <div v-for="issue in priorityThree">
-          {{issue.issue_type.name}}
+          {{issue.component.equipment.name}}: {{issue.issue_type.name}}
         </div>
       </div>
     </div>
