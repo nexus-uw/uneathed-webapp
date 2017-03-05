@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Status</h1>
+    <h1>Inventory VS Expected Demand</h1>
     <div style="display:inline-flex">
       <bar-chart v-if="haveItems" v-bind:chartData="data" v-bind:options="options" v-bind:height="400" v-bind:width="800"></bar-chart>
     </div>
@@ -63,34 +63,45 @@
       },
       data() {
         console.log('data', store.state.items.map(i => i.available_count))
+        const expectedDemand = [10, 3, 2, 21, 200, 7];
         return {
           datasets: [
             {
-              label: 'In Stock',
+              label: 'In Stock (%)',
               backgroundColor: '#5e9cd3',
-              data: store.state.items.map(i => i.available_count) || []
+              data: store.state.items.map((i, index) => Math.round(i.available_count / expectedDemand[index] * 100)) || []
             },
             {
-              label: 'In Stock + Ordered',
+              label: 'In Stock + Ordered (%)',
               backgroundColor: '#28744a',
-              data: store.state.items.map(i =>
-                i.available_count + R.sum(store.state.orders.filter(o => o.item_type_id === i.id).map(o => o.item_count))
+              data: store.state.items.map((i, index) =>
+                Math.round(i.available_count + R.sum(store.state.orders.filter(o => o.item_type_id === i.id).map(o => o.item_count)) / expectedDemand[index] * 100)
               ) || []
-            },
-            {
-              label: 'Expected Stock',
-              backgroundColor: '#c35a20',
-              data: [10, 3, 2, 21, 15, 7]
             }],
           chartData: [
 
           ],
           labels: store.state.items.map(i => i.name),
-          height: 400
-        }
+          height: 400,
+
+
+        };
       },
       options() {
-        return { responsive: false, maintainAspectRatio: false }
+        return {
+          responsive: false, maintainAspectRatio: false,
+          annotation: {
+            annotations: [{
+              id: 'a-line-1', // optional
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 100,
+              borderColor: '#ed7728',
+              borderWidth: 1.5,
+            }],
+          }
+        };
 
       }
     }
