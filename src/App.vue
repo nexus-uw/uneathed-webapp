@@ -7,6 +7,7 @@
       <router-link to="/work">Issues</router-link> |
       <router-link to="/inventory">Inventory</router-link> |
       <router-link to="/create_issue">Create Issue</router-link>
+      <router-link to="/status">Status</router-link>
     </div>
     <router-view></router-view>
   </div>

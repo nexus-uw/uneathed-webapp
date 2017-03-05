@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Work from '@/components/Work'
 import Inventory from '@/components/inventory'
 import CreateIssue from '@/components/CreateIssue'
+import Status from '@/components/status'
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +26,11 @@ export default new Router({
       path: '/create_issue',
       name: 'Create Issue',
       component: CreateIssue
+    },
+    {
+      path: '/status',
+      name: 'Status',
+      component: Status
     }
   ]
 })
