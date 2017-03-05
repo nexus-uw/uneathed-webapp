@@ -4,7 +4,7 @@
       <img src="./assets/logoSnapFix.io.png">
     </div>
     <div>
-      <router-link to="/work">Issues</router-link>
+      <router-link to="/work">Issues</router-link> |
       <router-link to="/inventory">Inventory</router-link>
     </div>
     <router-view></router-view>
