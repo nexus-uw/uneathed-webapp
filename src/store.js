@@ -18,10 +18,10 @@ const _getIssues = () => new Promise((resolve, reject) => setTimeout(() => {
     ))
 }, 1000))
 
-export const SERVER = 'http://10.0.2.89:3000'
+export const SERVER = 'https://api.snapfix.io'
 
 async function load(type) {
-  let response = await fetch(`${SERVER}/${type.replace(/([A-Z])/g, function($1, offset){     
+  let response = await fetch(`${SERVER}/${type.replace(/([A-Z])/g, function ($1, offset) {
     return "_" + $1.toLowerCase();
   }).substring(1)}.json`);
   return await response.json();
@@ -45,7 +45,7 @@ async function submitIssue(issue) {
   console.log(issue);
   let res = await fetch(`${SERVER}/issues.json`, {
     method: 'POST',
-    headers:  new Headers({
+    headers: new Headers({
       "Content-Type": "application/json",
       "Accept": "application/json"
     }),
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     loadComponents(state, data) {
       state.components = [].concat(data);
     },
-    loadIssueTypes(state, data){
+    loadIssueTypes(state, data) {
       state.issue_types = [].concat(data);
     }
   },
