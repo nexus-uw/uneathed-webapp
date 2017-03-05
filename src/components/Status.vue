@@ -5,13 +5,19 @@
       <bar-chart v-if="haveItems" v-bind:chartData="data" v-bind:options="options" v-bind:height="400" v-bind:width="800"></bar-chart>
     </div>
     <div class="row title-bar">
-      <h2 class="col-5">item</h2>
-      <h2 class="col-5">number of days between service (historical)</h2>
+      <h2 class="col">item</h2>
+      <h2 class="col">number of days between service (historical)</h2>
+      <h2 class="col">able to handle next issue?</h2>
     </div>
     <ul>
-      <li v-for="i in serviceLives" class="row">
-        <div class="col-5">{{i[0]}}</div>
-        <div class="col-5">{{i[1]}}</div>
+      <li v-for="i in serviceLives" class="row b-border">
+        <div class="col">{{i[0]}}</div>
+        <div class="col">{{i[1]}}</div>
+        <div class="col" v-bind:class="{ red: i[2] ===3, yellow:i[2]===2, green:i[2]===1 }">
+          <span v-if="i[2] ===3">NO</span>
+          <span v-if="i[2] ===2">maybe</span>
+          <span v-if="i[2] ===1">yes</span>
+        </div>
       </li>
     </ul>
   </div>
@@ -29,27 +35,27 @@
       return {
         message: '',
         serviceLives: [
-          ["SS", 22],
-          ["BED", 16],
-          ["WHL", 60],
-          ["STR", 43],
-          ["BP", 61],
-          ["BRK", 19],
-          ["DIF", 20],
-          ["FD", 17],
-          ["STE", 1],
-          ["PPF", 24],
-          ["TRA", 22],
-          ["CHOIST", 56],
-          ["CAB", 21],
-          ["INJ", 89],
-          ["CSTEER", 40],
-          ["SSPN", 475],
-          ["COOL", 51],
-          ["RAD", 115],
-          ["ALT", 42],
-          ["TC", 50],
-          ["PPH", 3],
+          ["SS", 22, 2],
+          ["BED", 16, 2],
+          ["WHL", 60, 1],
+          ["STR", 43, 3],
+          ["BP", 61, 1],
+          ["BRK", 19, 3],
+          ["DIF", 20, 2],
+          ["FD", 17, 1],
+          ["STE", 1, 1],
+          // ["PPF", 24],
+          // ["TRA", 22],
+          // ["CHOIST", 56],
+          // ["CAB", 21],
+          // ["INJ", 89],
+          // ["CSTEER", 40],
+          // ["SSPN", 475],
+          // ["COOL", 51],
+          // ["RAD", 115],
+          // ["ALT", 42],
+          // ["TC", 50],
+          // ["PPH", 3],
         ]
       }
     },
@@ -113,5 +119,17 @@
 <style scoped>
   .col-5 {
     width: 50%
+  }
+  
+  .red {
+    background-color: red;
+  }
+  
+  .yellow {
+    background-color: rgba(255, 255, 0, 0.4);
+  }
+  
+  .green {
+    background-color: rgba(0, 128, 0, 0.4);
   }
 </style>

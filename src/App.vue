@@ -81,4 +81,11 @@
     -moz-transition: all 0.3s;
     transition: all 0.3s;
   }
+  
+  .b-border {
+    padding-bottom: 1em;
+    border-bottom-color: lightgrey;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+  }
 </style>

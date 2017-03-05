@@ -98,4 +98,9 @@
   .col {
     width: 33%
   }
+  
+  .b-border {
+    border-bottom-color: dimgrey;
+    border-bottom-style: solid;
+  }
 </style>

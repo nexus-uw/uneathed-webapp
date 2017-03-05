@@ -8,7 +8,7 @@
       <h2 class="col">on order</h2>
     </div>
     <ul>
-      <li v-for="i in inventory" class="row">
+      <li v-for="i in inventory" class="row b-border">
         <div class="col">{{i.name}}</div>
         <div class="col">{{i.available_count}}</div>
         <div class="col">{{i.orderCount}}</div>
