@@ -24,4 +24,7 @@ npm run unit
 npm test
 ```
 
+## server
+see: [https://github.com/Cameron2920/unearthed-pepperoni}(https://github.com/Cameron2920/unearthed-pepperoni)
+
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
