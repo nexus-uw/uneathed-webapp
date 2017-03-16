@@ -34,6 +34,7 @@
     data() {
       return {
         message: '',
+        // note: these values where taken from the results of https://github.com/nexus-uw/report-history-analysis
         serviceLives: [
           ["SS", 22, 2],
           ["BED", 16, 2],
