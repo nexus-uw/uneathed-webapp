@@ -1,5 +1,7 @@
 # uneathed-webapp
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nexus-uw/uneathed-webapp.svg)](https://greenkeeper.io/)
+
 > [https://snapfix.io](https://snapfix.io)
 
 ## Build Setup
